@@ -1,0 +1,30 @@
+<div class="container"> 
+    <h2>Administrar Roles</h2>
+</div>
+<div class="container">
+  <table class="table">
+    <thead class="thead-dark">
+      <th scope="col">Id</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Sección</th>
+      <th scope="col">Activo</th>
+      <th scope="col">Acciones</th>
+    </thead>
+    <tr *ngFor='let rol of roles'>
+      <td>{{rol.id}}</td>
+      <td>{{rol.description}}</td>
+      <td>{{rol.section}}</td>
+      <td>{{rol.isActive}}</td>
+      <td>
+        <a [routerLink] = "['/rol-editar', rol.id]">
+          <input type="image" height="15" width="15" src="assets/icons/edit.png" alt="Editar" />
+        </a>
+        &nbsp;
+        <a routerLink="/rol-editar">
+          <input type="image" height="15" width="15" src="assets/icons/borrar.png" alt="Eliminar" />
+        </a>
+  </td>
+    </tr>
+  </table>
+</div>
+

@@ -1,0 +1,49 @@
+<div class="container">
+		<h2>Editar Rol</h2>
+		<div class="panel panel-default">
+		  <div class="panel-heading">Panel Heading</div>
+		  <div class="panel-body">Panel Content</div>
+		</div>
+	  </div>
+
+<div class="panel-body">
+<form >
+	<div class="form-group">
+		<label class="control-label col-sm-2">Sección:</label>
+		<select formControlName="sectionList" id="sectionList"> 
+			<option *ngFor="let section of sections" 
+			  [value]="section" [selected]="section == rol.section"> 
+			{{section}} 
+			</option> 
+		   </select> 
+	</div>
+	<div class="form-group">
+	    <label class="control-label col-sm-2">Rol:</label>
+	    <label style="margin-top:7px">{{rol.description}}</label>	
+	</div>
+    <div>
+	    <label class="control-label col-sm-2">Activo:</label>
+		<input type="checkbox" [checked] ="rol.isActive == 'Si'" ng-model="activo" />
+	</div>	
+	<div class="form-group">
+		<label class="control-label col-sm-2">Opciones:
+		</label>
+	</div>
+	<div class="form-group" style="margin-left:120px">
+		<label class="control-label col-sm-6"><input  type="checkbox"> Administrar Empresas</label>
+	</div>
+	<div class="form-group" style="margin-left:120px">
+		<label class="control-label col-sm-6"><input  type="checkbox"> Administra Empleados</label>
+	</div>			
+	<div class="form-group" style="margin-left:120px">
+		<label class="control-label col-sm-6"><input type="checkbox"> Registra Convenio</label>
+	</div>	
+	
+</form>	
+</div>
+
+<div>
+	 <button class="btn btn-primary" [routerLink]="['/rolAdministrar']">Guardar</button>
+	 <button class="btn btn-primary" [routerLink]="['/rolAdministrar']">Cancelar</button>
+</div>
+
