@@ -24,8 +24,6 @@ export class RolComponent implements OnInit {
       this.rolService.getRoles().subscribe(data => {
       console.log(data);
       this.roles = JSON.parse( JSON.stringify( data['objects'] ) );
-      let a: number;
-      a = 1;
     });
   }
 

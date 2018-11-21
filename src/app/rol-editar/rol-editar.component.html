@@ -1,10 +1,6 @@
 <div class="container">
 		<h2>Editar Rol</h2>
-		<div class="panel panel-default">
-		  <div class="panel-heading">Panel Heading</div>
-		  <div class="panel-body">Panel Content</div>
-		</div>
-	  </div>
+</div>
 
 <div class="panel-body">
 <form >
@@ -29,16 +25,13 @@
 		<label class="control-label col-sm-2">Opciones:
 		</label>
 	</div>
-	<div class="form-group" style="margin-left:120px">
-		<label class="control-label col-sm-6"><input  type="checkbox"> Administrar Empresas</label>
+	<div *ngFor="let permission of permissions">
+            <label>
+				<input type="checkbox"  value="'{{permission.id}}'"  [checked]="getBool(permission.state)"
+				/>
+				{{permission.name}}
+			</label>
 	</div>
-	<div class="form-group" style="margin-left:120px">
-		<label class="control-label col-sm-6"><input  type="checkbox"> Administra Empleados</label>
-	</div>			
-	<div class="form-group" style="margin-left:120px">
-		<label class="control-label col-sm-6"><input type="checkbox"> Registra Convenio</label>
-	</div>	
-	
 </form>	
 </div>
 

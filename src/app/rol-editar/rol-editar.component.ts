@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Rol } from '../model/rol.model';
-import {RolService} from '../rol/rol.service';
-import {ActivatedRoute} from '@angular/router';
+import { Permission } from '../model/permission.model';
+
+import { RolService } from '../rol/rol.service';
 
 
 @Component({
@@ -16,8 +19,9 @@ export class RolEditarComponent implements OnInit {
   public id_rol: number;
   public description: string;
   public activo: boolean;
+  public permissions: Permission[];
 
-  constructor(public rolService: RolService, private route: ActivatedRoute) { 
+  constructor(public rolService: RolService, private route: ActivatedRoute) {
     this.activo = false;
     this.id_rol = 0;
   }
@@ -32,7 +36,9 @@ export class RolEditarComponent implements OnInit {
       });
 
     this.getRol(this.id_rol);
-
+    this.getAllPermissions(this.id_rol);
+    let a: number;
+    a = 1;
   }
 
   ngOnDestroy() {
@@ -45,5 +51,20 @@ export class RolEditarComponent implements OnInit {
        this.rol = JSON.parse( JSON.stringify( data['objects'] ) )[0];
      });
    }
+
+   getAllPermissions(id: number) {
+    this.rolService.getAllPermissions(id).subscribe(data => {
+      console.log(data);
+      this.permissions = JSON.parse( JSON.stringify( data['objects'] ) );
+    });
+  }
+
+  getBool(id: number) {
+    if (id == 0 ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
 }

@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Rol } from '../model/rol.model';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+
+import { Rol } from '../model/rol.model';
+import { Permission } from '../model/permission.model';
+
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 @Injectable()
@@ -28,6 +31,14 @@ export class RolService {
       .pipe(
         tap(roles => this.log(`fetched rol`)),
         catchError(this.handleError('getRol', []))
+      );
+  }
+
+   getAllPermissions(id: number): Observable<Permission[]> {
+    return this.http.get<Permission[]>(this.apiUrl + 'rolpermissions' + '?userId=1&id=' + id)
+      .pipe(
+        tap(permissions => this.log(`fetched permissions`)),
+        catchError(this.handleError('getAllPermissions', []))
       );
   }
 
