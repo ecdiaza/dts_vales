@@ -14,15 +14,17 @@
       <td>{{rol.id}}</td>
       <td>{{rol.description}}</td>
       <td>{{rol.section}}</td>
-      <td>{{rol.isActive}}</td>
+      <td>
+        <div *ngIf="rol.locked == 'true'">No</div> 
+        <div *ngIf="rol.locked == 'false'">Si</div> 
+      </td>
       <td>
         <a [routerLink] = "['/rol-editar', rol.id]">
           <input type="image" height="15" width="15" src="assets/icons/edit.png" alt="Editar" />
         </a>
         &nbsp;
-        <a routerLink="/rol-editar">
-          <input type="image" height="15" width="15" src="assets/icons/borrar.png" alt="Eliminar" />
-        </a>
+        
+          <input type="image" (click)="deleteRol(rol.id)" height="15" width="15" src="assets/icons/borrar.png" alt="Eliminar" />
   </td>
     </tr>
   </table>

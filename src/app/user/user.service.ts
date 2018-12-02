@@ -11,15 +11,24 @@ export class UserService {
     this.isUserLoggedIn = false;
   }
 
-  setUserLoggedIn(user: User) {
+  public setUserLoggedIn(user: User) {
     this.isUserLoggedIn = true;
     this.userLogged = user;
     localStorage.setItem('currentUser', JSON.stringify(user));
-
   }
 
-  getUserLoggedIn() {
+  public getUserLoggedIn(): User {
+    if ( localStorage.getItem('currentUser') === '') {
+      let user = new User();
+      return user;
+    }
     return JSON.parse(localStorage.getItem('currentUser'));
   }
 
+  public setUserLoggedOut() {
+    this.isUserLoggedIn = false;
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserPermissions');
+    window.localStorage.clear();
+  }
 }

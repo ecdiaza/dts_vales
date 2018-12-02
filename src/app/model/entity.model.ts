@@ -3,5 +3,5 @@ export class Entity {
   public id: number;
   public creationTime: number;
   public lastModificationTime: number;
-  // public locked: boolean;
+  public locked: string;
 }

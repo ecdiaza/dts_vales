@@ -15,15 +15,20 @@ export class RolComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
     this.getRoles();
+  }
+
+  deleteRol(id: number) {
+    this.rolService.deleteRol(id).subscribe(data => {
+      console.log(data);
+    });
   }
 
   getRoles() {
       this.rolService.getRoles().subscribe(data => {
       console.log(data);
-      this.roles = JSON.parse( JSON.stringify( data['objects'] ) );
+      this.roles = JSON.parse(JSON.stringify(data['objects']));
     });
   }
 

@@ -13,30 +13,37 @@ import { HttpModule } from '@angular/http';
 import { RolComponent } from './rol/rol.component';
 import { RolService } from './rol/rol.service';
 import { RolEditarComponent } from './rol-editar/rol-editar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 const router: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'roles', component: RolComponent },
+  { path: 'empleados', component: EmployeeComponent },
+  { path: 'navbar', component: NavbarComponent },
   { path: 'rol-editar/:id_rol', component: RolEditarComponent },
   { path: '**', redirectTo: '/' }
   ];
-
- /*/{ path: '', redirectTo: '/cocina', pathMatch: 'full' },*/
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RolComponent,
-    RolEditarComponent
+    RolEditarComponent,
+    NavbarComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(router)
   ],
-  providers: [LoginService, UserService, RolService ],
+  providers: [LoginService, UserService, RolService, FormsModule ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

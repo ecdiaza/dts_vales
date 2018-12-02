@@ -5,44 +5,52 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { HttpClient } from 'selenium-webdriver/http';
 import { UseExistingWebDriver } from 'protractor/built/driverProviders';
-/*import { HttpClient } from '@angular/common/http';*/
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService, private router: Router, private userService: UserService) { }
+
+export class LoginComponent implements OnInit {
+  public user: User;
+  constructor(private loginService: LoginService, private router: Router, private userService: UserService) {
+    this.user = new User();
+
+    if (this.user = this.userService.getUserLoggedIn()) {
+      if (this.user.id >= 0 ) {
+        this.router.navigate(['**']);
+      }
+    }
+  }
 
   ngOnInit() {
+
   }
 
   logIn(username: string, password: string, event: Event) {
-    event.preventDefault(); // Avoid default action for the submit button of the login form
+    event.preventDefault();
+    let userSending: User = new User();
+    userSending.name = username;
+    userSending.document = username;
+    userSending.password = password;
 
-    // Calls service to login user to the api rest
-    let user: User = new User();
-    user.name = username;
-    user.document = username;
-    user.password = password;
-    this.loginService.login(user).subscribe(
-      res => {
-        /*let u: User = {name: username, password: password};*/
-        this.userService.setUserLoggedIn(user);
+    this.loginService.login(userSending).subscribe(data => {
+      console.log(data);
+      // this.user =  JSON.parse(JSON.stringify(data['user']));
+      let user: User;
+      user = new User();
+      user.id = Number(JSON.parse(JSON.stringify(data['user'])).id);
+      user.name = String(JSON.parse(JSON.stringify(data['user'])).name);
+      user.document = String(JSON.parse(JSON.stringify(data['user'])).document);
+      this.userService.setUserLoggedIn(user);
+      let a: number;
+      a = 1;
 
-      },
-      error => {
-        console.error(error);
-
-      },
-      () => this.navigate()
-    );
-
-  }
-
-  navigate() {
-    this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/');
+      window.location.reload();
+    });
   }
 }

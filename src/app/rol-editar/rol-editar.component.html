@@ -1,42 +1,51 @@
+
 <div class="container">
 		<h2>Editar Rol</h2>
 </div>
-
-<div class="panel-body">
-<form >
-	<div class="form-group">
-		<label class="control-label col-sm-2">Sección:</label>
-		<select formControlName="sectionList" id="sectionList"> 
-			<option *ngFor="let section of sections" 
-			  [value]="section" [selected]="section == rol.section"> 
-			{{section}} 
-			</option> 
-		   </select> 
+	
+<form #rolForm="ngForm" class="form-horizontal">  
+	<div class="row">
+		<div class="col-1">
+			<label for="sectionList"> <strong>Sección: </strong></label>
+		</div>
+		<div class="col-9">
+			<select name="$section" #$sectionList="ngModel" class="form-control"  [(ngModel)]="rol.section" id="sectionList" placeholder="Sección"> 
+				<option *ngFor="let section of sections" [value]="section" [selected]="section == rol.section"> {{section}} 
+				</option> 
+			</select> 
+		</div>			
 	</div>
-	<div class="form-group">
-	    <label class="control-label col-sm-2">Rol:</label>
-	    <label style="margin-top:7px">{{rol.description}}</label>	
+	<div class="row">
+		<div class="col-1">
+			<label for="descripcion" ><strong>Rol: </strong></label>
+		</div>
+		<div class="col-9">
+			<input type="text" name="$description" #$description="ngModel" [(ngModel)]="rol.description" class="form-control" placeholder="Descripción" value="{{rol.description}}" id="descripcion">
+		</div>
 	</div>
-    <div>
-	    <label class="control-label col-sm-2">Activo:</label>
-		<input type="checkbox" [checked] ="rol.isActive == 'Si'" ng-model="activo" />
+    <div class="row">
+		<div class="col-1">
+			<label><strong>Activo:</strong></label>
+		</div>
+		<div class="col-9">
+			<input type="checkbox" name="$activo" [(ngModel)]="activo" [checked] ="rol.locked == 'false'" />
+		</div>
 	</div>	
-	<div class="form-group">
-		<label class="control-label col-sm-2">Opciones:
-		</label>
+	<div class="row">
+		<div class="col-10">
+			<label><strong>Opciones:</strong></label>
+		</div>
+		<div class="col-3" *ngFor="let permission of permissions">
+				<label >
+					<input type="checkbox" name="${{permission.id}}"  (change)="onChangePermission($event, permission)" value="{{permission.id}}"  [checked]="getChecked(permission.state)"/> {{permission.name}}
+				</label>
+		</div>
 	</div>
-	<div *ngFor="let permission of permissions">
-            <label>
-				<input type="checkbox"  value="'{{permission.id}}'"  [checked]="getBool(permission.state)"
-				/>
-				{{permission.name}}
-			</label>
-	</div>
+	<div class="container">
+		<button class="btn btn-primary" type="submit" (click)="updateRol(rol)">Guardar</button> &nbsp;
+		<button class="btn btn-primary" [routerLink]="['/roles']">Cancelar</button>
+   </div>
 </form>	
-</div>
 
-<div>
-	 <button class="btn btn-primary" [routerLink]="['/rolAdministrar']">Guardar</button>
-	 <button class="btn btn-primary" [routerLink]="['/rolAdministrar']">Cancelar</button>
-</div>
+
 
