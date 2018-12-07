@@ -10,12 +10,16 @@ import { LoginService} from './login/login.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { RolComponent } from './rol/rol.component';
+
 import { RolService } from './rol/rol.service';
+import { EmployeeService } from './employee/employee.service';
+
+import { RolComponent } from './rol/rol.component';
 import { RolEditarComponent } from './rol-editar/rol-editar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeEditarComponent } from './employee-editar/employee-editar.component';
 
 const router: Routes = [
   { path: 'login', component: LoginComponent},
@@ -23,6 +27,7 @@ const router: Routes = [
   { path: 'empleados', component: EmployeeComponent },
   { path: 'navbar', component: NavbarComponent },
   { path: 'rol-editar/:id_rol', component: RolEditarComponent },
+  { path: 'empleado-editar/:id_empleado', component: EmployeeEditarComponent },
   { path: '**', redirectTo: '/' }
   ];
 
@@ -33,7 +38,8 @@ const router: Routes = [
     RolComponent,
     RolEditarComponent,
     NavbarComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    EmployeeEditarComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,7 @@ const router: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(router)
   ],
-  providers: [LoginService, UserService, RolService, FormsModule ],
+  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

@@ -75,7 +75,7 @@ export class RolService {
   }
 
   private log(message: string) {
-    console.log('UserService: ' + message);
+    console.log('RolService: ' + message);
   }
 
 }

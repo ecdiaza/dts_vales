@@ -1,0 +1,39 @@
+<div class="container"> 
+    <h2>Administrar Empleados</h2>
+</div>
+<div class="container">
+  <table class="table">
+    <thead class="thead-dark">
+      <th scope="col">Id</th>
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Tipo de documento</th>
+      <th scope="col">Nº de documento</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Correo Electrónico</th>
+      <th scope="col">Activo</th>
+      <th scope="col">Acciones</th>
+    </thead>
+    <tr *ngFor='let employee of employees'>
+      <td>{{employee.id}}</td>
+      <td>{{employee.names}}</td>
+      <td>{{employee.lastNames}}</td>
+      <td>{{employee.documentType}}</td>
+      <td>{{employee.document}}</td>
+      <td>{{employee.phone}}</td>
+      <td>{{employee.emailCompany}}</td>
+      <td>
+        <div *ngIf="employee.locked == 'true'">No</div> 
+        <div *ngIf="employee.locked == 'false'">Si</div> 
+      </td>
+      <td>
+        <a [routerLink] = "['/empleado-editar', employee.id]">
+          <input type="image" height="15" width="15" src="assets/icons/edit.png" alt="Editar" />
+        </a>
+        &nbsp;
+        
+          <input type="image" (click)="deleteEmployee(employee.id)" height="15" width="15" src="assets/icons/borrar.png" alt="Eliminar" />
+  </td>
+    </tr>
+  </table>
+</div>
