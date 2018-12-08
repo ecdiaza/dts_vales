@@ -7,20 +7,25 @@ import { of } from 'rxjs';
 
 import { Employee } from '../model/employee.model';
 import { Permission } from '../model/permission.model';
-
+import { User } from '../user/user.model';
+import { UserService } from '../user/user.service';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 @Injectable()
 export class EmployeeService {
   employee: any = [];
   private apiUrl: string;
+  user: User;
+  userService: UserService;
 
   constructor(private http: HttpClient) {
     this.apiUrl = 'http://localhost:8080/dts/api/employee/';
+    this.userService = new UserService();
+    this.user = this.userService.getUserLoggedIn();
   }
 
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl + 'employees' + '?userId=1')
+    return this.http.get<Employee[]>(this.apiUrl + 'employees' + '?userId=' + this.user.id)
       .pipe(
         tap(employees => this.log(`fetched employees`)),
         catchError(this.handleError('getEmployee', []))
@@ -28,7 +33,7 @@ export class EmployeeService {
   }
 
   getEmployee(id: number): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl + 'employee' + '?userId=1&id=' + id)
+    return this.http.get<Employee[]>(this.apiUrl + 'employee' + '?userId=' + this.user.id + '&id=' + id)
       .pipe(
         tap(employees => this.log(`fetched employee`)),
         catchError(this.handleError('getEmployee', []))
@@ -36,17 +41,26 @@ export class EmployeeService {
   }
 
 
-  updateEmployee (employee: Employee, userId: number): Observable<null> {
+  updateEmployee (employee: Employee): Observable<null> {
     let params: String;
-    params = JSON.stringify({ 'object': employee , 'userId': userId });
-    return this.http.post(this.apiUrl + 'update' + '?userId=1', params, httpOptions).pipe(
+    params = JSON.stringify({ 'object': employee , 'userId': this.user.id });
+    return this.http.post(this.apiUrl + 'update' + '?userId=' + this.user.id, params, httpOptions).pipe(
       tap(_ => this.log(`updated employee id=${employee.id}`)),
       catchError(this.handleError<any>('error: updateEmployee'))
     );
   }
 
+  insertEmployee (employee: Employee): Observable<null> {
+    let params: String;
+    params = JSON.stringify({ 'object': employee , 'userId': this.user.id });
+    return this.http.post(this.apiUrl + 'insert' + '?userId=' + this.user.id, params, httpOptions).pipe(
+      tap(_ => this.log(`insert employee id=${employee.id}`)),
+      catchError(this.handleError<any>('error: insertEmployee'))
+    );
+  }
+
   deleteEmployee (id: number): Observable<Employee> {
-    return this.http.delete<Employee>(this.apiUrl + 'delete' + '?userId=1&id=' + id, httpOptions).pipe(
+    return this.http.delete<Employee>(this.apiUrl + 'delete' + '?userId=' + this.user.id + '&id=' + id, httpOptions).pipe(
       tap(_ => this.log(`deleted employee id=${id}`)),
       catchError(this.handleError<Employee>('error: deleteEmployee'))
     );

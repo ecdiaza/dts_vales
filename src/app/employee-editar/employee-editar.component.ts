@@ -2,20 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from '../model/employee.model';
 import { EmployeeService } from '../employee/employee.service';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-editar',
   templateUrl: './employee-editar.component.html',
   styleUrls: ['./employee-editar.component.css']
 })
+
 export class EmployeeEditarComponent implements OnInit {
   private sub: any;
   public idEmployee: number;
   public employee: Employee;
   public activo: boolean;
+  public documentsType = ['CC', 'CE' , 'NIT'];
 
-  constructor(public employeeService: EmployeeService,  private route: ActivatedRoute) {
+  constructor(public employeeService: EmployeeService,  private route: ActivatedRoute, private router: Router) {
    }
+
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.idEmployee = params['id_empleado'];
@@ -24,26 +28,36 @@ export class EmployeeEditarComponent implements OnInit {
     this.getEmployee(this.idEmployee );
 
   }
+
   getEmployee(id: number) {
+    if ( id > 0 ) {
       this.employeeService.getEmployee(id).subscribe(data => {
       console.log(data);
       this.employee = JSON.parse(JSON.stringify(data[0]));
     });
+    } else {
+      this.employee = new Employee();
+    }
   }
 
-  updateEmployee(employee: Employee) {
-    let userId: number;
-    userId = 1;
-
+  saveEmployee(employee: Employee) {
     // Active Rol
     if ( this.activo ) {
       this.employee.locked = 'false';
     } else {
       this.employee.locked = 'true';
     }
-    // Update
-    this.employeeService.updateEmployee( employee, userId).subscribe(data => {
-      console.log(data);
-    });
+    if ( this.employee.id > 0 ) {
+      // Update
+      this.employeeService.updateEmployee(employee).subscribe(data => {
+        console.log(data);
+      });
+    } else {
+      // Insert
+      this.employeeService.insertEmployee(employee).subscribe(data => {
+        console.log(data);
+      });
+    }
+    window.location.href = './empleados';
   }
 }

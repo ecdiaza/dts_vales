@@ -23,6 +23,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe(data => {
       console.log(data);
     });
+    window.location.href = './empleados';
   }
 
   getEmployees() {

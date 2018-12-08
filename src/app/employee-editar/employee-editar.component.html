@@ -16,16 +16,19 @@
       <label for="lastnames" ><strong>Apellidos: </strong></label>
     </div>
     <div class="col-9">
-      <input type="text" name="$lastnames" #$lastnames="ngModel" [(ngModel)]="employee.lastnames" class="form-control" placeholder="Apellidos" value="{{employee.lastnames}}" id="lastnames">
+      <input type="text" name="$lastNames" #$lastNames="ngModel" [(ngModel)]="employee.lastNames" class="form-control" placeholder="Apellidos" value="{{employee.lastNames}}" id="lastnames">
     </div>
   </div>
   <div class="row">
     <div class="col-2">
       <label for="documentType" ><strong>Tipo de documento: </strong></label>
     </div>
-    <div class="col-9">
-      <input type="text" name="$documentType" #$documentType="ngModel" [(ngModel)]="employee.documentType" class="form-control" placeholder="Tipo de Documento" value="{{employee.documentType}}" id="documentType">
-    </div>
+		<div class="col-9">
+			<select name="$documentType" #$documentType="ngModel" [(ngModel)]="employee.documentType" class="form-control" placeholder="Tipo de Documento" value="{{employee.documentType}}" id="documentType"> 
+				<option *ngFor="let type of documentsType" [value]="type" [selected]="type == employee.documentType"> {{type}} 
+				</option> 
+			</select> 
+		</div>			
   </div>
   <div class="row">
     <div class="col-2">
@@ -61,7 +64,7 @@
 </div>	
 <div class="row">
   <div class="col-4" style = "text-align: right">
-    <button class="btn btn-primary" type="submit" (click)="updateEmployee(employee)"> Guardar </button> &nbsp;
+    <button class="btn btn-primary" type="submit" (click)="saveEmployee(employee)"> Guardar </button> &nbsp;
   </div>
   <div class="col-4">
     <button class="btn btn-primary" [routerLink]="['/empleados']"> Cancelar </button>
