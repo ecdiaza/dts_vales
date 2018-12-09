@@ -18,15 +18,15 @@ export class EmployeeEditarComponent implements OnInit {
   public documentsType = ['CC', 'CE' , 'NIT'];
 
   constructor(public employeeService: EmployeeService,  private route: ActivatedRoute, private router: Router) {
+    this.activo = false;
+    this.idEmployee = 0;
    }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.idEmployee = params['id_empleado'];
       });
-
-    this.getEmployee(this.idEmployee );
-
+      this.getEmployee(this.idEmployee);
   }
 
   getEmployee(id: number) {
@@ -37,6 +37,7 @@ export class EmployeeEditarComponent implements OnInit {
     });
     } else {
       this.employee = new Employee();
+      this.employee.id = 0;
     }
   }
 

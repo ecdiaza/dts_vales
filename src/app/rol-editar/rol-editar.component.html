@@ -1,6 +1,6 @@
 
 <div class="container">
-		<h2>Editar Rol</h2>
+	<h2>Editar Rol</h2>
 </div>
 	
 <form #rolForm="ngForm" class="form-horizontal">  
@@ -41,9 +41,13 @@
 				</label>
 		</div>
 	</div>
-	<div class="container">
-		<button class="btn btn-primary" type="submit" (click)="updateRol(rol)">Guardar</button> &nbsp;
-		<button class="btn btn-primary" [routerLink]="['/roles']">Cancelar</button>
+	<div class="row">
+		<div class="col-4" style = "text-align: right">
+			<button class="btn btn-primary" type="submit" (click)="saveRol(rol)">Guardar</button> &nbsp;
+		</div>
+		<div class="col-4" >
+			<button class="btn btn-primary" [routerLink]="['/roles']">Cancelar</button>
+		</div>
    </div>
 </form>	
 

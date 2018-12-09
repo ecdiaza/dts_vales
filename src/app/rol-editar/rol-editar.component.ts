@@ -17,24 +17,23 @@ export class RolEditarComponent implements OnInit {
   public sections = ['EmpresaTaxi', 'EmpresaCliente'];
   public rol: Rol;
   private sub: any;
-  public id_rol: number;
+  public idRol: number;
   public description: string;
   public activo: boolean;
   public permissions: Permission[];
 
   constructor(public rolService: RolService, private route: ActivatedRoute) {
     this.activo = false;
-    this.id_rol = 0;
+    this.idRol = 0;
   }
 
   ngOnInit() {
 
     this.sub = this.route.params.subscribe(params => {
-      this.id_rol = params['id_rol'];
+      this.idRol = params['id_rol'];
       });
-
-    this.getRol(this.id_rol);
-    this.getAllPermissions(this.id_rol);
+    this.getRol(this.idRol);
+    this.getAllPermissions(this.idRol);
   }
 
   onChangePermission(event, cat: any) { // Use appropriate model type instead of any
@@ -51,6 +50,7 @@ export class RolEditarComponent implements OnInit {
   }
 
   getRol(id: number) {
+    if ( id > 0 ) {
      this.rolService.getRol(id).subscribe(data => {
        console.log(data);
        this.rol = JSON.parse( JSON.stringify( data['objects'] ) )[0];
@@ -58,6 +58,10 @@ export class RolEditarComponent implements OnInit {
         this.activo = true;
       }
      });
+    } else {
+      this.rol = new Rol();
+      this.rol.id = 0;
+    }
    }
 
    getAllPermissions(id: number) {
@@ -67,10 +71,7 @@ export class RolEditarComponent implements OnInit {
     });
   }
 
-  updateRol(rol: Rol) {
-    let userId: number;
-    userId = 1;
-
+  saveRol(rol: Rol) {
     // List of permissions
     // tslint:disable-next-line:prefer-const
     let listIdPermisions: number[] = new Array()  ;
@@ -86,10 +87,19 @@ export class RolEditarComponent implements OnInit {
     } else {
       this.rol.locked = 'true';
     }
-    // Update
-    this.rolService.updateRol( rol, userId , listIdPermisions).subscribe(data => {
-      console.log(data);
-    });
+    if (this.rol.id > 0) {
+      // Update
+      this.rolService.updateRol( rol, listIdPermisions).subscribe(data => {
+        console.log(data);
+      });
+    } else {
+      // Insert
+      this.rolService.insertRol( rol, listIdPermisions).subscribe(data => {
+        console.log(data);
+      });
+
+    }
+    window.location.href = './roles';
   }
 
   getChecked(id: string) {
@@ -99,7 +109,7 @@ export class RolEditarComponent implements OnInit {
       return true;
     }
   }
-
+/*
   Actualizalocked(event) {
     if ( this.rol.locked === 'true') {
       this.rol.locked = 'false' ;
@@ -107,5 +117,5 @@ export class RolEditarComponent implements OnInit {
       this.rol.locked = 'true' ;
     }
   }
-
+*/
 }

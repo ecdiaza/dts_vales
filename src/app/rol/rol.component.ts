@@ -23,12 +23,13 @@ export class RolComponent implements OnInit {
     this.rolService.deleteRol(id).subscribe(data => {
       console.log(data);
     });
+    window.location.href = './roles';
   }
 
   getRoles() {
       this.rolService.getRoles().subscribe(data => {
       console.log(data);
-      this.roles = JSON.parse(JSON.stringify(data['objects']));
+      this.roles = JSON.parse(JSON.stringify(data));
     });
   }
 

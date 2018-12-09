@@ -7,20 +7,25 @@ import { of } from 'rxjs';
 
 import { Rol } from '../model/rol.model';
 import { Permission } from '../model/permission.model';
-
+import { User } from '../user/user.model';
+import { UserService } from '../user/user.service';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 @Injectable()
 export class RolService {
   roles: any = [];
   private apiUrl: string;
+  user: User;
+  userService: UserService;
 
   constructor(private http: HttpClient) {
     this.apiUrl = 'http://localhost:8080/dts/api/rol/';
+    this.userService = new UserService();
+    this.user = this.userService.getUserLoggedIn();
   }
 
   getRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.apiUrl + 'table' + '?userId=1')
+    return this.http.get<Rol[]>(this.apiUrl + 'roles' + '?userId=' + this.user.id)
       .pipe(
         tap(roles => this.log(`fetched roles`)),
         catchError(this.handleError('getRoles', []))
@@ -28,7 +33,7 @@ export class RolService {
   }
 
   getRol(id: number): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.apiUrl + 'rol' + '?userId=1&id=' + id)
+    return this.http.get<Rol[]>(this.apiUrl + 'rol' + '?userId=' + this.user.id + '&id=' + id)
       .pipe(
         tap(roles => this.log(`fetched rol`)),
         catchError(this.handleError('getRol', []))
@@ -36,7 +41,7 @@ export class RolService {
   }
 
   getAllPermissions(id: number): Observable<Permission[]> {
-    return this.http.get<Permission[]>(this.apiUrl + 'rolpermissions' + '?userId=1&id=' + id)
+    return this.http.get<Permission[]>(this.apiUrl + 'rolpermissions' + '?userId=' + this.user.id + '&id=' + id)
       .pipe(
         tap(permissions => this.log(`fetched permissions`)),
         catchError(this.handleError('getAllPermissions', []))
@@ -51,12 +56,21 @@ export class RolService {
       );
   }
 
-  updateRol (rol: Rol, userId: number, listPermissions: number[]): Observable<null> {
+  updateRol (rol: Rol, listPermissions: number[]): Observable<null> {
     let params: String;
-    params = JSON.stringify({ 'object': rol , 'userId': userId, 'permissions': listPermissions });
+    params = JSON.stringify({ 'object': rol , 'userId': this.user.id, 'permissions': listPermissions });
     return this.http.post(this.apiUrl + 'update' + '?userId=1', params, httpOptions).pipe(
       tap(_ => this.log(`updated rol id=${rol.id}`)),
       catchError(this.handleError<any>('error: updateRol'))
+    );
+  }
+
+  insertRol (rol: Rol, listPermissions: number[]): Observable<null> {
+    let params: String;
+    params = JSON.stringify({ 'object': rol , 'userId': this.user.id, 'permissions': listPermissions });
+    return this.http.post(this.apiUrl + 'insert' + '?userId=' + this.user.id , params, httpOptions).pipe(
+      tap(_ => this.log(`insert rol id=${rol.id}`)),
+      catchError(this.handleError<any>('error: insertRol'))
     );
   }
 
