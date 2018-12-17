@@ -15,7 +15,7 @@
       <th scope="col">Activo</th>
       <th scope="col">Acciones</th>
     </thead>
-    <tr *ngFor='let rol of roles'>
+    <tr *ngFor='let rol of rolesPage'>
       <td>{{rol.id}}</td>
       <td>{{rol.description}}</td>
       <td>{{rol.section}}</td>
@@ -33,5 +33,12 @@
   </td>
     </tr>
   </table>
+  <div class='btn-group'>
+    <button type='button' class='btn btn-default' [disabled]="currentPage == 1" (click)="setPage(currentPage - 1)">&laquo;</button>
+    <div *ngFor="let page of pages">
+    <button type='button' class='btn btn-default' [disabled]="currentPage == page" (click)="setPage(page)">{{page}}</button>
+  </div>
+    <button type='button' class='btn btn-default' [disabled]="currentPage >= numPages" (click)='setPage(currentPage + 1)'>&raquo;</button>
+  </div>
 </div>
 

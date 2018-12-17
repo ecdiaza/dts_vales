@@ -11,12 +11,31 @@ import { Observable } from 'rxjs';
 export class EmployeeComponent implements OnInit {
 
   public employees: Employee[];
+  // Pagination
+  public employeesPage: Employee[];
+  public currentPage: number;
+  public pages: number[];
+  public total: number;
+  public numPages: number;
+  public pageSize: number;
+  //
   constructor( public employeeService: EmployeeService) {
-
+    // Pagination
+    this.currentPage = 1;
+    this.pages = new Array();
+    this.pageSize = 5;
   }
 
   ngOnInit() {
     this.getEmployees();
+  }
+
+  setPage(index: number) {
+    this.currentPage = index;
+    this.employeesPage = new Array();
+    for (let i = (index - 1) * this.pageSize; ( i < index * this.pageSize ) && ( i < this.total ); i++) {
+      this.employeesPage.push(this.employees[i]);
+    }
   }
 
   deleteEmployee(id: number) {
@@ -30,6 +49,13 @@ export class EmployeeComponent implements OnInit {
       this.employeeService.getEmployees().subscribe(data => {
       console.log(data);
       this.employees = JSON.parse(JSON.stringify(data));
+      // Pagination
+      this.total = this.employees.length;
+      this.numPages = this.total / this.pageSize;
+      for (let i = 0; i < this.numPages; i++) {
+       this.pages.push(i + 1);
+      }
+      this.setPage(1);
     });
   }
 }
