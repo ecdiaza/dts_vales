@@ -1,0 +1,67 @@
+<div class="row"> 
+  <div class="col-6" style = " text-align: left ">
+    <h2>Administrar Empresas Cliente</h2>
+  </div>
+  <div class="col-6" style = " text-align:right; vertical-align: middle; padding-top: 4px;   ">
+				<button class="btn btn-secondary"  [routerLink] = "['/empresasCliente-editar', 0]" > Nuevo </button>
+	</div>
+</div>
+<div class="container">
+  <table class="table">
+    <thead class="thead-dark">
+      <th scope="col">Id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">NIT</th>
+      <th scope="col">Administrador</th>
+      <th scope="col">Dirección</th>
+      <th scope="col">Activo</th>
+      <th scope="col">Empresa de taxi</th>
+      <th scope="col">Red Propia</th>
+      <th scope="col">Sinergia</th>
+      <th scope="col">Acciones</th>
+    </thead>
+    <tr *ngFor='let clientCompany of clientCompaniesPage'>
+      <td>{{clientCompany.id}}</td>
+      <td>{{clientCompany.name}}</td>
+      <td>{{clientCompany.nit}}</td>
+      <td>{{clientCompany.administrator}}</td>
+      <td>{{clientCompany.address}}</td>
+      <td>
+        <div *ngIf="clientCompany.locked == 'true'">No</div> 
+        <div *ngIf="clientCompany.locked == 'false'">Si</div> 
+      </td>
+      <td>
+        <div *ngIf="clientCompany.isTaxiCompany == 'false'">No</div> 
+        <div *ngIf="clientCompany.isTaxiCompany == 'true'">Si</div> 
+      </td>
+      <td>
+        <div *ngIf="clientCompany.ownNetwork == 'false'">No</div> 
+        <div *ngIf="clientCompany.ownNetwork == 'true'">Si</div> 
+      </td>
+      <td>
+        <div *ngIf="clientCompany.synergy == 'false'">No</div> 
+        <div *ngIf="clientCompany.synergy == 'true'">Si</div> 
+      </td>
+      <td>
+        <a [routerLink] = "['/empresasCliente-editar', clientCompany.id]">
+          <input type="image" height="15" width="15" src="assets/icons/edit.png" alt="Editar" />
+        </a>
+        &nbsp;
+        <input type="image" (click)="deleteClientCompany(clientCompany.id)" height="15" width="15" src="assets/icons/borrar.png" alt="Eliminar" />
+        &nbsp;
+        &nbsp;
+        <a [routerLink] = "['/empresasCliente-editar', clientCompany.id]">
+          <input type="image" height="15" width="25" src="assets/icons/empleados.png" alt="Empleados" />
+        </a>
+        &nbsp;
+  </td>
+    </tr>
+  </table>
+  <div class='btn-group'>
+    <button type='button' class='btn btn-default' [disabled]="currentPage == 1" (click)="setPage(currentPage - 1)">&laquo;</button>
+    <div *ngFor="let page of pages">
+    <button type='button' class='btn btn-default' [disabled]="currentPage == page" (click)="setPage(page)">{{page}}</button>
+  </div>
+    <button type='button' class='btn btn-default' [disabled]="currentPage >= numPages" (click)='setPage(currentPage + 1)'>&raquo;</button>
+  </div>
+</div>

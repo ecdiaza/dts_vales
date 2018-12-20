@@ -1,0 +1,78 @@
+
+<div class="container">
+  <h2>Editar Empresa Cliente</h2>
+</div>
+<form #clientCompanyForm="ngForm" class="form-horizontal">  
+  <div class="row">
+    <div class="col-2">
+      <label for="name" ><strong>Nombre: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$name" #$name="ngModel" [(ngModel)]="clientCompany.name" class="form-control" placeholder="Nombre Empresa" value="{{clientCompany.name}}" id="name">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label for="nit" ><strong>NIT: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$nit" #$nit="ngModel" [(ngModel)]="clientCompany.nit" class="form-control" placeholder="NIT" value="{{clientCompany.nit}}" id="nit">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label for="address" ><strong>Direccion: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$address" #$document="ngModel" [(ngModel)]="clientCompany.address" class="form-control" placeholder="Dirección" value="{{clientCompany.address}}" id="address">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <label><strong>Activo:</strong></label>
+    </div>
+    <div class="col-9">
+      <input type="checkbox" name="$active" [(ngModel)]="active" [checked] ="active" />
+    </div>
+  </div>	
+
+  <div class="row">
+    <div class="col-2">
+      <label><strong>Es Empresa Taxi:</strong></label>
+    </div>
+    <div class="col-9">
+      <input type="checkbox" name="$isTaxiCompany" [(ngModel)]="isTaxiCompany" [checked] ="isTaxiCompany" />
+    </div>
+  </div>	
+
+  <div class="row">
+    <div class="col-2">
+      <label><strong>Vales para:</strong></label>
+    </div>
+    <div class="col-9" style = "text-align: left;">
+      <div class="row">
+        <div class="col-2" style = "text-align: left">
+          <input type="checkbox" name="$ownNetwork" [(ngModel)]="ownNetwork" [checked] ="ownNetwork" />
+          <label><strong>&nbsp;Red Propia</strong></label>
+        </div>
+      </div>	
+
+      <div class="row">
+        <div class="col-2" style = "text-align: left">
+          <input type="checkbox" name="$synergy" [(ngModel)]="synergy" [checked] ="synergy" />
+          <label><strong>&nbsp;Sinergia</strong></label>
+        </div>
+      </div>	
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-4" style = "text-align: right">
+    <button class="btn btn-primary" type="submit" (click)="saveClientCompany(clientCompany)"> Guardar </button> &nbsp;
+  </div>
+  <div class="col-4">
+    <button class="btn btn-primary" [routerLink]="['/empresasCliente']"> Cancelar </button>
+  </div>
+ </div>
+</form>	
