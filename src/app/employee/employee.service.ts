@@ -24,8 +24,8 @@ export class EmployeeService {
     this.user = this.userService.getUserLoggedIn();
   }
 
-  getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl + 'employees' + '?userId=' + this.user.id)
+  getEmployees(companyId: number): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.apiUrl + 'employees' + '?userId=' + this.user.id + '&companyId=' + companyId )
       .pipe(
         tap(employees => this.log(`fetched employees`)),
         catchError(this.handleError('getEmployee', []))

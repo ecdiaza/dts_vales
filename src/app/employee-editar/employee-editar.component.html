@@ -54,20 +54,30 @@
       <input type="text" name="$emailCompany" #$emailCompany="ngModel" [(ngModel)]="employee.emailCompany" class="form-control" placeholder="emailCompany" value="{{employee.emailCompany}}" id="emailCompany">
     </div>
   </div>
-<div class="row">
-  <div class="col-2">
-    <label><strong>Activo:</strong></label>
+	<div class="row">
+		<div class="col-2">
+			<label for="sectionList"> <strong>Rol: </strong></label>
+		</div>
+		<div class="col-9">
+			<select name="$rolList" #$rolList="ngModel" class="form-control"  [(ngModel)]="employee.rolId" id="rolList"> 
+        <option *ngFor="let rol of roles" [value]="rol.id" [selected]="rol.id == employee.rolId"> {{rol.description}} </option> 
+			</select> 
+		</div>			
+	</div>  
+  <div class="row">
+    <div class="col-2">
+      <label><strong>Activo:</strong></label>
+    </div>
+    <div class="col-9">
+      <input type="checkbox" name="$activo" [(ngModel)]="activo" [checked] ="employee.locked == 'false'" />
+    </div>
+  </div>	
+  <div class="row">
+    <div class="col-4" style = "text-align: right">
+      <button class="btn btn-primary" type="submit" (click)="saveEmployee(employee)"> Guardar </button> &nbsp;
+    </div>
+    <div class="col-4">
+      <button class="btn btn-primary"  [routerLink] = "['/empleados', companyId]" > Cancelar </button>
+    </div>
   </div>
-  <div class="col-9">
-    <input type="checkbox" name="$activo" [(ngModel)]="activo" [checked] ="employee.locked == 'false'" />
-  </div>
-</div>	
-<div class="row">
-  <div class="col-4" style = "text-align: right">
-    <button class="btn btn-primary" type="submit" (click)="saveEmployee(employee)"> Guardar </button> &nbsp;
-  </div>
-  <div class="col-4">
-    <button class="btn btn-primary" [routerLink]="['/empleados']"> Cancelar </button>
-  </div>
- </div>
 </form>	

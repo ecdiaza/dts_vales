@@ -45,7 +45,7 @@ export class RolComponent implements OnInit {
   }
 
   getRoles() {
-      this.rolService.getRoles().subscribe(data => {
+      this.rolService.getRoles(0).subscribe(data => {
       console.log(data);
       this.roles = JSON.parse(JSON.stringify(data));
       // Pagination

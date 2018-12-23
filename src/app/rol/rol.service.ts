@@ -24,8 +24,8 @@ export class RolService {
     this.user = this.userService.getUserLoggedIn();
   }
 
-  getRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(this.apiUrl + 'roles' + '?userId=' + this.user.id)
+  getRoles(companyId: number): Observable<Rol[]> {
+    return this.http.get<Rol[]>(this.apiUrl + 'roles' + '?userId=' + this.user.id + '&companyId=' + companyId)
       .pipe(
         tap(roles => this.log(`fetched roles`)),
         catchError(this.handleError('getRoles', []))

@@ -3,7 +3,7 @@
     <h2>Administrar Empleados</h2>
   </div>
   <div class="col-6" style = " text-align:right; vertical-align: middle; padding-top: 4px;   ">
-				<button class="btn btn-secondary"  [routerLink] = "['/empleado-editar', 0]" > Nuevo </button>
+				<button class="btn btn-secondary"  [routerLink] = "['/empleado-editar', 0, companyId]" > Nuevo </button>
 	</div>
 </div>
 <div class="container">
@@ -32,7 +32,7 @@
         <div *ngIf="employee.locked == 'false'">Si</div> 
       </td>
       <td>
-        <a [routerLink] = "['/empleado-editar', employee.id]">
+        <a [routerLink] = "['/empleado-editar', employee.id, companyId]">
           <input type="image" height="15" width="15" src="assets/icons/edit.png" alt="Editar" />
         </a>
         &nbsp;

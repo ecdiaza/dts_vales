@@ -15,4 +15,5 @@ export class ClientCompany extends Entity {
   isTaxiCompany: string;
   ownNetwork: string;
   synergy: string;
+  numcvn: number;
 }

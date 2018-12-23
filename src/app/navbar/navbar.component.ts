@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../user/user.model';
+import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   navbarOpen: boolean;
   userPermission: string[];
-  constructor() {
+  user: User;
+  constructor( private router: Router, private userService: UserService) {
     this.userPermission = new Array();
+    this.user = new User();
     this.navbarOpen = true;
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.userPermission = JSON.parse(localStorage.getItem('currentUserPermissions'));
   }
 
@@ -19,6 +25,12 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
+  }
+
+  goEmployees() {
+   // this.router.navigate(['/empleados', this.user.companyId]);
+   this.router.navigate(['/empleados/' + this.user.companyId]);
+
   }
 
   getPermission(item: string) {

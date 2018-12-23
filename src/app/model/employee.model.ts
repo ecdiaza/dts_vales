@@ -7,4 +7,6 @@ export class Employee extends Entity {
   document: String;
   phone: String;
   emailCompany: String;
+  companyId: Number;
+  rolId: Number;
 }

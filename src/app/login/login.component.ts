@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
       user.id = Number(JSON.parse(JSON.stringify(data['user'])).id);
       user.name = String(JSON.parse(JSON.stringify(data['user'])).name);
       user.document = String(JSON.parse(JSON.stringify(data['user'])).document);
+      user.companyId = Number(JSON.parse(JSON.stringify(data['user'])).companyId);
       this.userService.setUserLoggedIn(user);
       let a: number;
       a = 1;

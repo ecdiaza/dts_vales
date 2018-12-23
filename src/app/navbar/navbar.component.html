@@ -14,9 +14,12 @@
       <li *ngIf="getPermission('Roles')" class="nav-item">
         <a class="nav-link" href="/roles">Roles</a>
       </li>
-      <li  class="nav-item ">
-        <a class="nav-link" href="/empleados">Empleados</a>
+      <li *ngIf="getPermission('Empleados')" class="nav-item ">
+        <a class="nav-link" (click)="goEmployees()">Empleados</a>
       </li>
+      <li *ngIf="getPermission('Empresas Cliente')" class="nav-item ">
+        <a class="nav-link" href="/empresasCliente">Empresas Cliente</a>
+      </li>      
     </ul>
   </div>
 </nav>

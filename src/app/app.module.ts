@@ -20,14 +20,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeEditarComponent } from './employee-editar/employee-editar.component';
+import { ClientCompanyComponent } from './client-company/client-company.component';
+import { ClientCompanyService } from './client-company/client-company.service';
+import { ClientCompanyEditComponent } from './client-company-edit/client-company-edit.component';
 
 const router: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'roles', component: RolComponent },
-  { path: 'empleados', component: EmployeeComponent },
-  { path: 'navbar', component: NavbarComponent },
   { path: 'rol-editar/:id_rol', component: RolEditarComponent },
-  { path: 'empleado-editar/:id_empleado', component: EmployeeEditarComponent },
+  { path: 'empleados', component: EmployeeComponent },
+  { path: 'empleados/:id_empresa', component: EmployeeComponent },
+  { path: 'empleado-editar/:id_empleado/:id_empresa', component: EmployeeEditarComponent },
+  { path: 'empresasCliente', component: ClientCompanyComponent },
+  { path: 'empresasCliente-editar/:id_clientCompany', component: ClientCompanyEditComponent },
+  { path: 'navbar', component: NavbarComponent },
   { path: '**', redirectTo: '/' }
   ];
 
@@ -39,7 +45,9 @@ const router: Routes = [
     RolEditarComponent,
     NavbarComponent,
     EmployeeComponent,
-    EmployeeEditarComponent
+    EmployeeEditarComponent,
+    ClientCompanyComponent,
+    ClientCompanyEditComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,7 @@ const router: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(router)
   ],
-  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule ],
+  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule, ClientCompanyService ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

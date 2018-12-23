@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService} from './employee.service';
 import { Employee} from '../model/employee.model';
+import { UserService } from '../user/user.service';
+
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -9,7 +12,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent implements OnInit {
-
+  private sub: any;
   public employees: Employee[];
   // Pagination
   public employeesPage: Employee[];
@@ -18,8 +21,10 @@ export class EmployeeComponent implements OnInit {
   public total: number;
   public numPages: number;
   public pageSize: number;
+  public companyId: number;
   //
-  constructor( public employeeService: EmployeeService) {
+  // tslint:disable-next-line:max-line-length
+  constructor( public employeeService: EmployeeService, private route: ActivatedRoute, private router: Router, private userService: UserService ) {
     // Pagination
     this.currentPage = 1;
     this.pages = new Array();
@@ -27,7 +32,15 @@ export class EmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getEmployees();
+    this.companyId = 0;
+    this.sub = this.route.params.subscribe(params => {
+      if ( params['id_empresa'] !== undefined ) {
+        this.companyId = params['id_empresa'];
+      } else {
+        this.companyId = this.userService.getUserLoggedIn().companyId;
+      }
+      });
+    this.getEmployees( this.companyId );
   }
 
   setPage(index: number) {
@@ -42,11 +55,11 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe(data => {
       console.log(data);
     });
-    window.location.href = './empleados';
+    this.router.navigate(['/empleados/' + this.companyId]);
   }
 
-  getEmployees() {
-      this.employeeService.getEmployees().subscribe(data => {
+  getEmployees(companyId: number) {
+      this.employeeService.getEmployees(companyId).subscribe(data => {
       console.log(data);
       this.employees = JSON.parse(JSON.stringify(data));
       // Pagination

@@ -12,8 +12,8 @@
       <th scope="col">Id</th>
       <th scope="col">Nombre</th>
       <th scope="col">NIT</th>
-      <th scope="col">Administrador</th>
       <th scope="col">Dirección</th>
+      <th scope="col">Con Convenio</th>
       <th scope="col">Activo</th>
       <th scope="col">Empresa de taxi</th>
       <th scope="col">Red Propia</th>
@@ -24,8 +24,11 @@
       <td>{{clientCompany.id}}</td>
       <td>{{clientCompany.name}}</td>
       <td>{{clientCompany.nit}}</td>
-      <td>{{clientCompany.administrator}}</td>
       <td>{{clientCompany.address}}</td>
+      <td>
+        <div *ngIf="clientCompany.numcvn > 0 ">Si</div> 
+        <div *ngIf="clientCompany.numcvn == 0">No</div> 
+      </td>
       <td>
         <div *ngIf="clientCompany.locked == 'true'">No</div> 
         <div *ngIf="clientCompany.locked == 'false'">Si</div> 
@@ -50,7 +53,7 @@
         <input type="image" (click)="deleteClientCompany(clientCompany.id)" height="15" width="15" src="assets/icons/borrar.png" alt="Eliminar" />
         &nbsp;
         &nbsp;
-        <a [routerLink] = "['/empresasCliente-editar', clientCompany.id]">
+        <a [routerLink] = "['/empleados', clientCompany.id]">
           <input type="image" height="15" width="25" src="assets/icons/empleados.png" alt="Empleados" />
         </a>
         &nbsp;
