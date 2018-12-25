@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientCompany } from '../model/client-company.model';
 import { ClientCompanyService } from './client-company.service';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-client-company',
@@ -16,19 +17,19 @@ export class ClientCompanyComponent implements OnInit {
   public total: number;
   public numPages: number;
   public pageSize: number;
+  public userClientCompany: ClientCompany;
   //
-  constructor(public clientCompanyService: ClientCompanyService) {
+  constructor(public clientCompanyService: ClientCompanyService, public userService: UserService) {
     this.clientCompanies = new Array();
+    this.userClientCompany = new ClientCompany();
     // Pagination
     this.currentPage = 1;
     this.pages = new Array();
     this.pageSize = 5;
   }
 
-
-
   ngOnInit() {
-    this.getClientCompanies();
+    this.getListCompanies();
   }
 
   setPage(index: number) {
@@ -46,8 +47,8 @@ export class ClientCompanyComponent implements OnInit {
     window.location.href = './empresasCliente';
   }
 
-  getClientCompanies() {
-      this.clientCompanyService.getClientCompanies().subscribe(data => {
+  getClientCompanies(isTaxiCompany: string ) {
+      this.clientCompanyService.getClientCompanies(isTaxiCompany).subscribe(data => {
       console.log(data);
       this.clientCompanies = JSON.parse(JSON.stringify(data));
       // Pagination
@@ -59,4 +60,14 @@ export class ClientCompanyComponent implements OnInit {
       this.setPage(1);
     });
   }
+
+  getListCompanies() {
+    let companyId: number;
+    companyId = this.userService.getUserLoggedIn().companyId;
+    this.clientCompanyService.getClientCompany(companyId).subscribe(data => {
+      console.log(data);
+      this.getClientCompanies(JSON.parse(JSON.stringify(data[0])).isTaxiCompany);
+    });
+  }
+
 }

@@ -23,8 +23,8 @@ export class ClientCompanyService {
     this.user = this.userService.getUserLoggedIn();
   }
 
-  getClientCompanies(): Observable<ClientCompany[]> {
-    return this.http.get<ClientCompany[]>(this.apiUrl + 'companies' + '?userId=' + this.user.id)
+  getClientCompanies(isTaxiCompany: string): Observable<ClientCompany[]> {
+    return this.http.get<ClientCompany[]>(this.apiUrl + 'companies' + '?userId=' + this.user.id + '&isTaxiCompany=' + isTaxiCompany)
       .pipe(
         tap(clientCompanies => this.log(`fetched Client Companies`)),
         catchError(this.handleError('getClientCompanies', []))

@@ -16,6 +16,7 @@ export class ClientCompanyEditComponent implements OnInit {
   public isTaxiCompany: boolean;
   public ownNetwork: boolean;
   public synergy: boolean;
+  public userCompanyIsClientCompany: string;
 
   constructor(public clientCompanyService: ClientCompanyService,  private route: ActivatedRoute, private router: Router) {
     this.active = false;
@@ -67,6 +68,11 @@ export class ClientCompanyEditComponent implements OnInit {
       this.clientCompany = new ClientCompany();
       this.clientCompany.id = 0;
     }
+    // Get userCompanyIsClientCompany
+    this.clientCompanyService.getClientCompany(id).subscribe(data => {
+      console.log(data);
+      this.userCompanyIsClientCompany = JSON.parse(JSON.stringify(data[0])).isTaxiCompany;
+    });
   }
 
   saveClientCompany(clientCompany: ClientCompany) {

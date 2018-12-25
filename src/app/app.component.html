@@ -1,9 +1,9 @@
-<div *ngIf="!userLogged">
+<div *ngIf="!userLogged"  class="container-fluid">
   <div class="container">
     <app-login></app-login>
   </div>
 </div>
-<div *ngIf="userLogged">
+<div *ngIf="userLogged" class="container-fluid">
   <div class="container">
     <li><a [routerLink]="['/']" (click)="onLogout($event)">Logout</a></li>
   </div>
