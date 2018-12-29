@@ -1,0 +1,63 @@
+
+<div class="container">
+  <h2>Convenio</h2>
+</div>
+<form #agreementForm="ngForm" class="form-horizontal">  
+  <div class="row">
+    <div class="col-2">
+      <label for="names" ><strong>Empresa: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$name" #$name="ngModel" [(ngModel)]="clientCompany.name" class="form-control" placeholder="Nombre Empresa" value="{{clientCompany.name}}" id="name" disabled >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label for="lastnames" ><strong>Fecha Inicio: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="date" name="$startDate" #$startDate="ngModel" [(ngModel)]="agreement.startDate" class="form-control" placeholder="Fecha de Inicio" value="{{agreement.startDate}}" id="startDate">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label for="document" ><strong>Fecha Fin: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="date" name="$finalDate" #$finalDate="ngModel" [(ngModel)]="agreement.finalDate" class="form-control" placeholder="Fecha Final" value="{{agreement.finalDate}}" id="finalDate">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label for="phone" ><strong>Monto Mensual: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$monthlyAmount" #$monthlyAmount="ngModel" [(ngModel)]="agreement.monthlyAmount" class="form-control" placeholder="monthlyAmount" value="{{agreement.monthlyAmount}}" id="monthlyAmount">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label><strong>Tipo Convenio:</strong></label>
+    </div>
+    <div class="col-9">
+    <div class="row">
+      <div class="col-9">
+        <input type="checkbox" name="$isEspecial" [(ngModel)]="isEspecial" [checked] ="agreement.isEspecial == 'true'" /><label>&nbsp; Especial (Tarifa convenida):</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-9">
+        <input type="checkbox" name="$isSurcharge" [(ngModel)]="isSurcharge" [checked] ="agreement.isSurcharge == 'true'" /><label>&nbsp; Con Recargo (Recargo administrativo de 1000 pesos):</label>
+      </div>
+    </div>
+  </div>
+  </div>	
+  <div class="row">
+    <div class="col-4" style = "text-align: right">
+      <button class="btn btn-primary" type="submit" (click)="saveAgreement(agreement)"> Guardar </button> &nbsp;
+    </div>
+    <div class="col-4">
+      <button class="btn btn-primary"  [routerLink] = "['/empresasCliente']" > Cancelar </button>
+    </div>
+  </div>
+</form>	

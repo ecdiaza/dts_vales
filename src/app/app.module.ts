@@ -13,6 +13,7 @@ import { HttpModule } from '@angular/http';
 
 import { RolService } from './rol/rol.service';
 import { EmployeeService } from './employee/employee.service';
+import { AgreementService } from './agreement/agreement.service';
 
 import { RolComponent } from './rol/rol.component';
 import { RolEditarComponent } from './rol-editar/rol-editar.component';
@@ -23,6 +24,7 @@ import { EmployeeEditarComponent } from './employee-editar/employee-editar.compo
 import { ClientCompanyComponent } from './client-company/client-company.component';
 import { ClientCompanyService } from './client-company/client-company.service';
 import { ClientCompanyEditComponent } from './client-company-edit/client-company-edit.component';
+import { AgreementComponent } from './agreement/agreement.component';
 
 const router: Routes = [
   { path: 'login', component: LoginComponent},
@@ -33,6 +35,7 @@ const router: Routes = [
   { path: 'empleado-editar/:id_empleado/:id_empresa', component: EmployeeEditarComponent },
   { path: 'empresasCliente', component: ClientCompanyComponent },
   { path: 'empresasCliente-editar/:id_clientCompany', component: ClientCompanyEditComponent },
+  { path: 'convenio/:id_empresa', component: AgreementComponent },
   { path: 'navbar', component: NavbarComponent },
   { path: '**', redirectTo: '/' }
   ];
@@ -47,7 +50,8 @@ const router: Routes = [
     EmployeeComponent,
     EmployeeEditarComponent,
     ClientCompanyComponent,
-    ClientCompanyEditComponent
+    ClientCompanyEditComponent,
+    AgreementComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,7 @@ const router: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(router)
   ],
-  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule, ClientCompanyService ],
+  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule, ClientCompanyService, AgreementService ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
