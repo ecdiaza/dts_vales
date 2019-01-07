@@ -25,6 +25,9 @@ import { ClientCompanyComponent } from './client-company/client-company.componen
 import { ClientCompanyService } from './client-company/client-company.service';
 import { ClientCompanyEditComponent } from './client-company-edit/client-company-edit.component';
 import { AgreementComponent } from './agreement/agreement.component';
+import { ValeComponent } from './vale/vale.component';
+import { ValeEditarComponent } from './vale-editar/vale-editar.component';
+import { ValeService } from './vale/vale.service';
 
 const router: Routes = [
   { path: 'login', component: LoginComponent},
@@ -36,8 +39,11 @@ const router: Routes = [
   { path: 'empresasCliente', component: ClientCompanyComponent },
   { path: 'empresasCliente-editar/:id_clientCompany', component: ClientCompanyEditComponent },
   { path: 'convenio/:id_empresa', component: AgreementComponent },
+  { path: 'vales', component: ValeComponent },
+  { path: 'vale-editar', component: ValeEditarComponent },
   { path: 'navbar', component: NavbarComponent },
   { path: '**', redirectTo: '/' }
+
   ];
 
 @NgModule({
@@ -51,7 +57,9 @@ const router: Routes = [
     EmployeeEditarComponent,
     ClientCompanyComponent,
     ClientCompanyEditComponent,
-    AgreementComponent
+    AgreementComponent,
+    ValeComponent,
+    ValeEditarComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +69,7 @@ const router: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(router)
   ],
-  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule, ClientCompanyService, AgreementService ],
+  providers: [LoginService, UserService, RolService, EmployeeService, FormsModule, ClientCompanyService, AgreementService, ValeService ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

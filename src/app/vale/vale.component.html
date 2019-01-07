@@ -1,0 +1,40 @@
+<div class="row"> 
+  <div class="col-6" style = " text-align: left ">
+    <h2>Administrar Vales</h2>
+  </div>
+  <div class="col-6" style = " text-align:right; vertical-align: middle; padding-top: 4px;   ">
+				<button class="btn btn-secondary"  [routerLink] = "['/vale-editar']" > Nuevo </button>
+	</div>
+</div>
+
+<div class="container">
+  <table class="table">
+    <thead class="thead-dark">
+      <th scope="col">Id</th>
+      <th scope="col">Código</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Empresa</th>
+      <th scope="col">Beneficiario</th>
+      <th scope="col">Inicio</th>
+      <th scope="col">Fin</th>
+      <th scope="col">Fecha</th>
+    </thead>
+    <tr *ngFor='let vale of listVales'>
+      <td>{{vale.id}}</td>
+      <td>{{vale.codigo}}</td>
+      <td>{{vale.estado}}</td>
+      <td>{{vale.empresa}}</td>
+      <td>{{vale.nombrePasajero}}</td>
+      <td>{{vale.partida}}</td>
+      <td>{{vale.destino}}</td>
+      <td>{{ vale.fechaHora | date:'dd-mm-yyy mm:ss' }}</td>
+    </tr>
+  </table>
+  <div class='btn-group'>
+    <button type='button' class='btn btn-default' [disabled]="currentPage == 1" (click)="setPage(currentPage - 1)">&laquo;</button>
+    <div *ngFor="let page of pages">
+    <button type='button' class='btn btn-default' [disabled]="currentPage == page" (click)="setPage(page)">{{page}}</button>
+  </div>
+    <button type='button' class='btn btn-default' [disabled]="currentPage >= numPages" (click)='setPage(currentPage + 1)'>&raquo;</button>
+  </div>
+</div>

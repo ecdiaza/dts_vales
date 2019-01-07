@@ -1,0 +1,106 @@
+<div class="container">
+  <h2>Solicitar Vale</h2>
+</div>
+<form #valeForm="ngForm" class="form-horizontal">  
+  <div class="row">
+    <div class="col-2">
+      <label for="sectionList"> <strong>Empresa: </strong></label>
+    </div>
+    <div class="col-9">
+      <select name="$listCompanies" #$listCompanies="ngModel" class="form-control"  [(ngModel)]="vale.idEmpresaCliente" id="listCompanies" required> 
+        <option *ngFor="let clientCompany of listClientCompanies" [value]="clientCompany.id" > {{clientCompany.name}} </option> 
+      </select> 
+    </div>			
+  </div> 
+  
+  <div  class="row">
+    <div class="col-2">
+      <label><strong>Tipo pasajero:</strong></label>
+    </div>
+    <div class="col-9" style = "text-align: left;">
+      <div class="row">
+        <div class="col-2" style = "text-align: left">
+          <input type="radio" name="$tipoPasajero" (click)="setEstercero('false')" checked/>
+          <label><strong>&nbsp;Empleado</strong></label>
+        </div>
+        <div class="col-2" style = "text-align: left">
+          <input type="radio" name="$tipoPasajero"  (click)="setEstercero('true')"/>
+          <label><strong>&nbsp;Un Tercero</strong></label>
+        </div>
+      </div>	
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-2">
+      <label for="name" ><strong>Pasajero: </strong></label>
+    </div>
+    <div class="col-1">
+      <label for="name" ><strong>Cédula: </strong></label>
+    </div>
+    <div class="col-2">
+      <input type="text" name="$numeroDocumento" #$numeroDocumento="ngModel" [(ngModel)]="vale.numeroDocumento" class="form-control" placeholder="Cédula" value="{{vale.numeroDocumento}}" (change)="getEmpleado()" id="numeroDocumento">
+    </div>
+    <div class="col-1">
+      <label for="name" ><strong>Nombre: </strong></label>
+    </div>
+    <div class="col-5">
+      <input type="text" name="$nombrePasajero" #$nombrePasajero="ngModel" [(ngModel)]="vale.nombrePasajero" class="form-control" placeholder="Nombre Pasajero" value="{{employee.names + ' ' + employee.lastNames}}" id="nombrePasajero" [disabled]="vale.esTercero=='false'">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <label for="inicio" ><strong>Inicio:</strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$partida" #$partida="ngModel" [(ngModel)]="vale.partida" class="form-control" placeholder="Inicio" value="{{vale.partida}}" id="inicio">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <label for="destino" ><strong>Destino: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="text" name="$destino" #$destino="ngModel" [(ngModel)]="vale.destino" class="form-control" placeholder="Destino" value="{{vale.destino}}" id="destino">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <label for="fechaHora" ><strong>Dia y Hora: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="datetime-local" name="$fechaHora" #$fechaHora="ngModel" [(ngModel)]="vale.fechaHora" class="form-control" placeholder="Dia y Hora" value="{{vale.fechaHora}}" id="diaYHora">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-2">
+      <label for="monto" ><strong>Monto: </strong></label>
+    </div>
+    <div class="col-9">
+      <input type="number"  name="$monto" #$monto="ngModel" [(ngModel)]="vale.monto" class="form-control" placeholder="Monto" value="{{vale.diaYHora}}" id="monto">
+    </div>
+  </div>
+    
+  <div class="row">
+      <div class="col-2">
+        <label for="conductor" ><strong>Conductor: </strong></label>
+      </div>
+      <div class="col-9">
+        <input type="text" name="$conductor" #$conductor="ngModel" [(ngModel)]="vale.conductor" class="form-control" placeholder="Conductor" value="{{vale.conductor}}" id="conductor">
+      </div>
+  </div>
+
+  <br>
+  <div class="row">
+    <div class="col-4" style = "text-align: right">
+      <button class="btn btn-primary" type="submit" (click)="saveVale(vale)"> Guardar </button> &nbsp;
+    </div>
+    <div class="col-4">
+      <button class="btn btn-primary" [routerLink]="['/vales']"> Cancelar </button>
+    </div>
+ </div>
+</form>	
